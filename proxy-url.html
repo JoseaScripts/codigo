@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>José A. González: descarga de datos en JSON</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script type="text/javascript">
+    const PROXYURL = "https://cors-anywhere.herokuapp.com/";
+    const ENLACE = "https://www.elmundo.es/servicios/noticias/scroll/comentarios/comunidad/listar.html?noticia=1705996&version=v2"
+    const ARCHIVO = PROXYURL + ENLACE;
+  </script>
+  <style>
+    card {
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+    }
+    .gist {
+      margin: 5px 0px;
+    }
+  </style>
+</head>
+<body my-3>
+  <div class="container">
+    <h1>Descarga de datos en formato JSON</h1>
+    <h2>XMLHttpRequest</h2>
+    <h3 class="text-light bg-secondary py-2 my-3">Carga síncrona de datos</h3>
+    <article class="card border-info mb-3">
+      <h4 class="card-header">Carga automática de datos descargados en la página</h4>
+      <div class="card-body">
+        <div class="card-text">Una solicitud síncrona detiene todos los procesos hasta que recibe una respuesta.
+          Puede que la respuesta tarde mucho en llegar o que nunca llegue, lo que deja a los usuarios en la estacada.
+          Por este motivo se recomienda hacer las solicitudes a servidores de manera asíncrona.
+        </div>
+        <div class="gist">
+          <script src="https://gist.github.com/JoseaScripts/7e7fba8a4366f051985bdd6367427735.js"></script>
+        </div>
+        <p class="card-text bg-secondary py-4">Abajo se cargan los datos descargados...</p>
+      </div>
+      <div class="card-footer" id="imprimir"></div>
+    </article>
+      <script>
+        const DATOS = new XMLHttpRequest();
+        DATOS.open("GET", ARCHIVO, false);
+        DATOS.send();
+        let CADENA = DATOS.responseText;
+        OBJETO = JSON.parse(CADENA);
+        ELEMENTO = OBJETO.items[0];
+        console.log('ELEMENTO: ', ELEMENTO)
+        document.getElementById('imprimir').innerHTML = ELEMENTO.body
+      </script>
+    </div>
+  </body>
+  </html>
