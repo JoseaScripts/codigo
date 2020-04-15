@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ejemplos de código para uso en proyectos de desarrollo">
+  <meta name="keywords" content="proyectos,desarrollo,informática,logros,currículum vitae,HTML,CSS,JavaScript,JSON,Bootstrap">
+  <meta name="author" content="José A. González">
+  <title>José A. González: descarga de datos en JSON</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+  <link rel="stylesheet" href="/css/XMLHttpRequest.css">
+  <script type="text/javascript">
+    const PROXYURL = "https://cors-anywhere.herokuapp.com/";
+    const ENLACE = "https://www.elmundo.es/servicios/noticias/scroll/comentarios/comunidad/listar.html?noticia=1705996&version=v2"
+    const ARCHIVO = PROXYURL + ENLACE;
+  </script>
+  <style>
+    button {
+      display: inline-block;
+      background-color: yellow;
+      float: right;
+    }
+    .resaltar:hover {
+      color: yellow;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+
+    <header>
+      <nav>
+        <h1>Descarga de datos en JSON</h1>
+        <a href="/">
+          <div id="logo">
+              <p>osé A. González &nbsp;</p>
+          </div>
+        </a>
+      </nav>
+    </header>
+
+    <h2>Manejo de datos en formato JSON con XMLHttpRequest.</h2>
+
+    <article class="imprimir">
+      <header>
+        <a href="/codigo/XMLHttpRequest01.html" onmouseleave='this.classList.remove("resaltar")' onmouseenter='this.className += " resaltar"'>
+          Ejemplos básico de descarga síncrona de datos en formato .JSON
+        </a>
+      </header>
+      <button type="button" onclick="muestraDiv('XMLHttpRequest01'); (this.innerHTML == '+ info') ? this.innerHTML = 'x' : this.innerHTML = '+ info'; ">+ info</button>
+      <div id="XMLHttpRequest01" style="display: none">
+        <span>
+          <ul>
+            <li>Acceso a datos externos a través de XMLHttpRequest(), en forma síncrona.</li>
+            <li>Uso de 'proxy' evitar error: CORS header 'Access-Control-Allow-Origin' missing.</li>
+            <li>Carga de datos en página html.</li>
+          </ul>
+      </div>
+    </article>
+    <article class="imprimir">
+      <header>
+        <a href="/codigo/XMLHttpRequest02.html" onmouseleave='this.classList.remove("resaltar")' onmouseenter='this.className += " resaltar"'>
+          Descarga síncrona de datos en formato .JSON con manejo de errores.
+        </a>
+      </header>
+      <button type="button" onclick="muestraDiv('XMLHttpRequest02'); (this.innerHTML == '+ info') ? this.innerHTML = 'x' : this.innerHTML = '+ info'; ">+ info</button>
+      <div id="XMLHttpRequest02" style="display: none">
+        <span>
+          <ul>
+            <li>Acceso a datos externos a través de XMLHttpRequest(), en forma síncrona.</li>
+            <li>Uso de 'proxy' evitar error: CORS header 'Access-Control-Allow-Origin' missing.</li>
+            <li>Carga de datos en página html.</li>
+            <li>Gestión de errores de descarga con 'try' y 'catch'.</li>
+
+          </ul>
+      </div>
+    </article>
+
+    <div class="enlaces">
+      <a href="https://github.com/JoseaScripts/codigo/blob/master/XMLHttpRequest.html">
+        Código publicado en <span id="github"></span>
+      </a>
+    </div>
+    <div class="enlaces">
+        Más info y detalles <a href="/codigo/proxy-url.html"><strong>aquí</strong>.</a>
+    </div>
+
+      <script>
+        function muestraDiv(codigo) {
+          let x = document.getElementById(codigo);
+          if (x.style.display === "none") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+          }
+          console.log('codigo: ', codigo)
+        }
+      </script>
+  </div>
+</body>
+</html>
