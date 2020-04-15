@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ejemplos de código para uso en proyectos de desarrollo">
+  <meta name="keywords" content="proyectos,desarrollo,informática,logros,currículum vitae,HTML,CSS,JavaScript,JSON,Bootstrap">
+  <meta name="author" content="José A. González">
+  <title>José A. González: descarga de datos en JSON</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+  <link rel="stylesheet" href="/css/XMLHttpRequest.css">
+  <script type="text/javascript">
+    const PROXYURL = "https://cors-anywhere.herokuapp.com/";
+    const ENLACE = "https://www.elmundo.es/servicios/noticias/scroll/comentarios/comunidad/listar.html?noticia=1705996&version=v2"
+    const ARCHIVO = PROXYURL + ENLACE;
+  </script>
+</head>
+<body>
+  <div id="container">
+    
+    <header>
+      <nav>
+        <h1>Descarga de datos en JSON</h1>
+        <div id="logo">
+            <p>osé A. González &nbsp;</p>
+        </div>
+      </nav>
+    </header>
+
+    <h2>Carga síncrona de datos con XMLHttpRequest y manejo de errores.</h2>
+    <article>
+
+      <div>Los datos abajo se han cargado de una fuente externa:</div>
+      <div id="imprimir"></div>
+    </article>
+
+    <div class="fuentes">
+      <a href="https://github.com/JoseaScripts/codigo/blob/master/XMLHttpRequest01.html">
+        Código publicado en <span id="github"></span>
+      </a>
+    </div>
+    <div class="fuentes">
+        Más info y detalles <a href="/codigo/proxy-url.html"><strong>aquí</strong>.</a>
+    </div>
+
+      <script>
+      try {
+        const DATOS = new XMLHttpRequest();
+        DATOS.open("GET", ARCHIVO, false);
+        DATOS.send();
+        const OBJETO = JSON.parse(DATOS.responseText);
+        ELEMENTO = OBJETO.items[Math.floor(Math.random() * 9)];
+        document.getElementById('imprimir').innerHTML = ELEMENTO.body
+      }catch(e) {
+        console.log('error: ', e)
+        document.getElementById('imprimir').innerHTML = e
+      }
+
+      </script>
+  </div>
+</body>
+</html>
