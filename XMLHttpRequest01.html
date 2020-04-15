@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>José A. González: descarga de datos en JSON</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script type="text/javascript">
+    const PROXYURL = "https://cors-anywhere.herokuapp.com/";
+    const ENLACE = "https://www.elmundo.es/servicios/noticias/scroll/comentarios/comunidad/listar.html?noticia=1705996&version=v2"
+    const ARCHIVO = PROXYURL + ENLACE;
+  </script>
+  <style>
+    .github {
+      color: #3333ff;
+      text-align: right;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body my-3>
+  <div class="container">
+    <h1>Descarga de datos en formato JSON</h1>
+    <h2 class="text-light bg-secondary py-2 my-3">Carga síncrona de datos con XMLHttpRequest</h2>
+    <div class="bg-light">Los datos abajo se han cargado de una fuente externa:</div>
+    <div class="bg-info my-4" id="imprimir"></div>
+    <div class="github">
+      <a href="https://github.com/JoseaScripts/codigo/blob/master/proxy-url.html">
+        Código publicado en
+        <img src="/img/github-logo.png" alt="github-logo" width=40 style="vertical-align: bottom;">
+      </a>
+    </div>
+    <div class="github">
+        Más info y detalles <a href="/codigo/proxy-url.html"><strong>aquí</strong>.</a>
+    </div>
+      <script>
+        const DATOS = new XMLHttpRequest();
+        DATOS.open("GET", ARCHIVO, false);
+        DATOS.send();
+        const OBJETO = JSON.parse(DATOS.responseText);
+        ELEMENTO = OBJETO.items[Math.floor(Math.random() * 9)];
+        document.getElementById('imprimir').innerHTML = ELEMENTO.body
+      </script>
+  </div>
+</body>
+</html>
