@@ -3,36 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ejemplos de código para uso en proyectos de desarrollo">
+  <meta name="keywords" content="proyectos,desarrollo,informática,logros,currículum vitae,HTML,CSS,JavaScript,JSON,Bootstrap">
+  <meta name="author" content="José A. González">
   <title>José A. González: descarga de datos en JSON</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+  <link rel="stylesheet" href="/css/XMLHttpRequest.css">
   <script type="text/javascript">
     const PROXYURL = "https://cors-anywhere.herokuapp.com/";
     const ENLACE = "https://www.elmundo.es/servicios/noticias/scroll/comentarios/comunidad/listar.html?noticia=1705996&version=v2"
     const ARCHIVO = PROXYURL + ENLACE;
   </script>
-  <style>
-    .github {
-      color: #3333ff;
-      text-align: right;
-      text-decoration: none;
-    }
-  </style>
 </head>
-<body my-3>
-  <div class="container">
-    <h1>Descarga de datos en formato JSON</h1>
-    <h2 class="text-light bg-secondary py-2 my-3">Carga síncrona de datos con XMLHttpRequest</h2>
-    <div class="bg-light">Los datos abajo se han cargado de una fuente externa:</div>
-    <div class="bg-info my-4" id="imprimir"></div>
-    <div class="github">
-      <a href="https://github.com/JoseaScripts/codigo/blob/master/proxy-url.html">
-        Código publicado en
-        <img src="/img/github-logo.png" alt="github-logo" width=40 style="vertical-align: bottom;">
+<body>
+  <div id="container">
+
+    <header>
+      <nav>
+        <h1>Descarga de datos en JSON</h1>
+        <div id="logo">
+            <p>osé A. González &nbsp;</p>
+        </div>
+      </nav>
+    </header>
+
+    <h2>Carga síncrona de datos con XMLHttpRequest</h2>
+
+    <article>
+      <div>Los datos abajo se han cargado de una fuente externa:</div>
+      <div id="imprimir"></div>
+    </article>
+
+    <div class="fuentes">
+      <a href="https://github.com/JoseaScripts/codigo/blob/master/XMLHttpRequest01.html">
+        Código publicado en <span id="github"></span>
       </a>
     </div>
-    <div class="github">
+    <div class="fuentes">
         Más info y detalles <a href="/codigo/proxy-url.html"><strong>aquí</strong>.</a>
     </div>
+
       <script>
         const DATOS = new XMLHttpRequest();
         DATOS.open("GET", ARCHIVO, false);
@@ -41,6 +52,7 @@
         ELEMENTO = OBJETO.items[Math.floor(Math.random() * 9)];
         document.getElementById('imprimir').innerHTML = ELEMENTO.body
       </script>
+
   </div>
 </body>
 </html>
