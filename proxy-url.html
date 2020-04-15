@@ -18,35 +18,105 @@
     .gist {
       margin: 5px 0px;
     }
+    .error {
+      background-color: red;
+      color: white;
+      padding: 10px;
+    }
   </style>
 </head>
 <body my-3>
   <div class="container">
     <h1>Descarga de datos en formato JSON</h1>
-    <h2>XMLHttpRequest</h2>
-    <h3 class="text-light bg-secondary py-2 my-3">Carga síncrona de datos</h3>
-    <article class="card border-info mb-3">
-      <h4 class="card-header">Carga automática de datos descargados en la página</h4>
-      <div class="card-body">
-        <div class="card-text">Una solicitud síncrona detiene todos los procesos hasta que recibe una respuesta.
-          Puede que la respuesta tarde mucho en llegar o que nunca llegue, lo que deja a los usuarios en la estacada.
-          Por este motivo se recomienda hacer las solicitudes a servidores de manera asíncrona.
+    <h2 class="text-light bg-secondary py-2 my-3">Carga síncrona de datos con XMLHttpRequest</h2>
+    <div class="bg-light">Abajo se han cargado datos de una fuente externa:</div>
+    <div class="bg-info my-4" id="imprimir"></div>
+    <article class="card border-primary mb-2">
+      <div class="card-header">
+        Acceder a datos en servidores externos es una acción bastante común actualmente.
+        Posiblemente el método más utilizado es utilizando la 'API fetch',
+        pero en este ejemplo quiero usar la manera usada antes de que se implementara esa API.
+      </div>
+      <main class="card-body">
+        <h3 class="card-title">Acceso, formato y entrega de datos de terceros en nuestro sitio.</h3>
+        <div class="card-text">
+          En primer lugar puede que tengamos que esquivar ciertas medidas de seguridad para acceder a datos externos.
+          Para esto utilizamos un sitio 'puente' por donde canalizamos la solicitud a los datos.
+          De los diversos métodos para recuperar esa información el más básico es 'XMLHttpRequest'.
+          Una vez tenemos los datos, hay que formatearlos y para mostrarlos preparamos un contenedor
+          que identificamos con un 'id' e incrustamos los datos con 'innerHTML'.
+        </div>
+        <div class="gist">
+          <script src="https://gist.github.com/JoseaScripts/74f03ed92f1ad01295b4393a3638c77a.js"></script>
+       </div>
+      </main>
+    </article>
+    <article class="card border-primary mb-2">
+      <div class="card-header">
+        Conseguí una url que devuelve comentarios a noticias de un diario digital en formato JSON.
+        El caso es que copio la dirección en el navegador y se cargan los datos y se puede acceder a la información sin problemas,
+        pero cuando quiero acceder a ellos desde mi código para trabajar con ellos me salta un error: 'CORS header'.
+        <p class="error">Solicitud desde otro origen bloqueada: la política de mismo origen impide leer el recurso remoto en https://www.elmundo.es/servicios/noticias/scroll/comentarios/comunidad/listar.html?noticia=1705996&version=v2 (razón: la cabecera CORS 'Access-Control-Allow-Origin' no coincide con 'http://172.25.33.11:9000')</p>
+        El conflicto aparece porque no coinciden la IP de mi conexión a internet con las del servidor web de mi ordenador.
+        Para poder acceder a estos datos utilizo un sitio web como puente:</div>
+      <main class="card-body">
+        <h3 class="card-title">CORS header 'Access-Control-Allow-Origin' missing</h3>
+        <div class="card-text">
+          La solución es hacer que un tercero acceda a la información y me permita luego acceder a ella.
+          El sitio 'herokuapp.com' accede a los datos y luego nos los sirve para poder trabajar con ellos.
+          En la cabecera de mi página inserto un código encargado de hacer la petición de los datos a través de ese 'proxy'.
         </div>
         <div class="gist">
           <script src="https://gist.github.com/JoseaScripts/7e7fba8a4366f051985bdd6367427735.js"></script>
         </div>
-        <p class="card-text bg-secondary py-4">Abajo se cargan los datos descargados...</p>
+      </main>
+    </article>
+    <article class="card border-primary mb-2">
+      <div class="card-header">
+        Existen diversos modos de acceder a datos alojados en servidores externos.
+        La forma más 'sencilla' o 'básica' que tenemos en javascript es la clase XMLHttpRequest.
+        En este ejemplo se hace de manera asíncrona, lo que en determinados casos puede crear problemas,
+        ya que se paraliza la descarga de la página hasta que se reciben los datos.
+        Incluso, en el caso de que los datos no lleguen se congela nuestro sitio.
+        La conexión asíncrona no se recomienda.
       </div>
-      <div class="card-footer" id="imprimir"></div>
+      <main class="card-body">
+        <h3 class="card-title">Descarga asíncrona de datos de archivo 'JSON'</h3>
+        <div class="card-text">
+          Se crea una nueva instancia de la clase XMLHttpRequest.
+          Luego se genera la solicitud de los datos, incluyendo como 3<sup>er</sup> parámetro la opción 'false',
+          que indica que la solicitud se haga de forma asíncrona.
+          Por último se envía la solicitud y los datos recibidos quedan almacenados en la variable DATOS.
+        </div>
+        <div class="gist">
+          <script src="https://gist.github.com/JoseaScripts/a7103690807a9c0f34ea47bcfa327ee8.js"></script>
+       </div>
+      </main>
+    </article>
+    <article class="card border-primary mb-2">
+      <div class="card-header">
+        La respuesta a la solicitud XMLHttpRequest es un objeto con mas información y datos sobre del proceso.
+        Los datos del archivo JSON vienen almacenados, en forma de texto, en un elemento llamado responseText.
+      </div>
+      <main class="card-body">
+        <h3 class="card-title">Acceso y formato de datos recibidos</h3>
+        <div class="card-text">
+          Mediante la función 'JSON.parse' convertimos el texto recibido en un objeto de javascript.
+          Una vez tenemos el objeto podemos acceder a cada uno de sus elementos siempre y cuando conozcamos su estructura.
+          En este caso accedo aleatoriamente a uno de los elementos del array 'items'.
+          Por último, inserto el elemento 'body' del objeto seleccionado en la página.
+        </div>
+        <div class="gist">
+          <script src="https://gist.github.com/JoseaScripts/2f1f8b835299a7ea60416116027c154a.js"></script>
+       </div>
+      </main>
     </article>
       <script>
         const DATOS = new XMLHttpRequest();
         DATOS.open("GET", ARCHIVO, false);
         DATOS.send();
-        let CADENA = DATOS.responseText;
-        OBJETO = JSON.parse(CADENA);
-        ELEMENTO = OBJETO.items[0];
-        console.log('ELEMENTO: ', ELEMENTO)
+        const OBJETO = JSON.parse(DATOS.responseText);
+        ELEMENTO = OBJETO.items[Math.floor(Math.random() * 9)];
         document.getElementById('imprimir').innerHTML = ELEMENTO.body
       </script>
     </div>
