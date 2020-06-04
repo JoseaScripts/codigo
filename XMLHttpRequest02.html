@@ -16,15 +16,17 @@
     const ARCHIVO = PROXYURL + ENLACE;
   </script>
 </head>
-<body>
+<body onload="tareas()">
   <div id="container">
-    
+
     <header>
       <nav>
         <h1>Descarga de datos en JSON</h1>
-        <div id="logo">
-            <p>osé A. González &nbsp;</p>
-        </div>
+        <a href="/">
+          <div id="logo">
+              <p>osé A. González &nbsp;</p>
+          </div>
+        </a>
       </nav>
     </header>
 
@@ -32,25 +34,35 @@
     <article>
 
       <div>Los datos abajo se han cargado de una fuente externa:</div>
-      <div id="imprimir"></div>
+      <div id="imprimir" class="imprimir"></div>
     </article>
 
-    <div class="fuentes">
+    <div class="enlaces">
       <a href="https://github.com/JoseaScripts/codigo/blob/master/XMLHttpRequest02.html">
         Código publicado en <span id="github"></span>
       </a>
     </div>
-    <div class="fuentes">
-        Más info y detalles <a href="/codigo/proxy-url.html"><strong>aquí</strong>.</a>
+    <div class="enlaces">
+        Más info y detalles <a href="./XMLHttpRequest.html"><strong>aquí</strong>.</a>
     </div>
 
       <script>
+      function tareas() {
+        let z = document.lastModified;
+        let x = `Documento actualizado el ${z}.`;
+        let node = document.createElement("small");
+        let textnode = document.createTextNode(x);
+        node.appendChild(textnode);
+        node.setAttribute("id", "modificado");
+        document.getElementById('container').appendChild(node);
+      }
+      
       try {
         const DATOS = new XMLHttpRequest();
         DATOS.open("GET", ARCHIVO, false);
         DATOS.send();
         const OBJETO = JSON.parse(DATOS.responseText);
-        ELEMENTO = OBJETO.items[Math.floor(Math.random() * 9)];
+        ELEMENTO = OBJETO.items[Math.floor(Math.random() * 10)];
         document.getElementById('imprimir').innerHTML = ELEMENTO.body
       }catch(e) {
         console.log('error: ', e)
