@@ -16,7 +16,7 @@
     const ARCHIVO = PROXYURL + ENLACE;
   </script>
 </head>
-<body>
+<body onload="tareas()">
   <div id="container">
 
     <header>
@@ -32,7 +32,8 @@
 
     <article>
       <div>Los datos abajo se han cargado de una fuente externa:</div>
-      <div id="imprimir"></div>
+      <!-- Aquí se imprimen los datos -->
+      <div id="imprimir" class="imprimir"></div>
     </article>
 
     <div class="enlaces">
@@ -41,10 +42,25 @@
       </a>
     </div>
     <div class="enlaces">
-        Más info y detalles <a href="/codigo/XMLHttpRequest.html"><strong>aquí</strong>.</a>
+        Más info y detalles <a href="./XMLHttpRequest.html"><strong>aquí</strong>.</a>
     </div>
 
       <script>
+        // Añade un elemento 'small' al final del '#container'
+        // Indica la fecha de modificación del propio documento.
+      function tareas() {
+        let node = document.createElement("small");
+
+        let z = document.lastModified;
+        let x = `Documento actualizado el ${z}.`;
+        let textnode = document.createTextNode(x);
+
+        node.appendChild(textnode);
+        node.setAttribute("id", "modificado");
+
+        document.getElementById('container').appendChild(node);
+      }
+      
         const DATOS = new XMLHttpRequest();
         DATOS.open("GET", ARCHIVO, false);
         DATOS.send();
