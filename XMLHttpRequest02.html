@@ -56,17 +56,18 @@
         node.setAttribute("id", "modificado");
         document.getElementById('container').appendChild(node);
       }
-      
+        
+      let elementoDOM = document.getElementById('imprimir')
       try {
         const DATOS = new XMLHttpRequest();
         DATOS.open("GET", ARCHIVO, false);
         DATOS.send();
         const OBJETO = JSON.parse(DATOS.responseText);
         ELEMENTO = OBJETO.items[Math.floor(Math.random() * 10)];
-        document.getElementById('imprimir').innerHTML = ELEMENTO.body
+        elementoDOM.innerHTML = ELEMENTO.body
       }catch(e) {
         console.log('error: ', e)
-        document.getElementById('imprimir').innerHTML = e
+        elementoDOM.innerHTML = e
       }
 
       </script>
