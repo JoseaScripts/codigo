@@ -65,7 +65,7 @@
         DATOS.open("GET", ARCHIVO, false);
         DATOS.send();
         const OBJETO = JSON.parse(DATOS.responseText);
-        ELEMENTO = OBJETO.items[Math.floor(Math.random() * 9)];
+        ELEMENTO = OBJETO.items[Math.floor(Math.random() * 10)];
         document.getElementById('imprimir').innerHTML = ELEMENTO.body
       </script>
 
