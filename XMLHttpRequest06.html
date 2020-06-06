@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ejemplos de código para uso en proyectos de desarrollo">
+  <meta name="keywords" content="proyectos,desarrollo,informática,logros,currículum vitae,HTML,CSS,JavaScript,JSON,Bootstrap">
+  <meta name="author" content="José A. González">
+  <title>José A. González: descarga de datos en JSON</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+  <link rel="stylesheet" href="/css/XMLHttpRequest.css">
+  <style>
+    /* https://github.com/lonekorean/gist-syntax-themes */
+    @import url('https://cdn.rawgit.com/lonekorean/gist-syntax-themes/b737b139/stylesheets/terminal.css');
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+  </style>
+</head>
+<body onload="ultimaModificacion('modificado')">
+  <div id="container">
+
+    <header>
+      <nav>
+        <h1>Descarga de datos en JSON</h1>
+        <a href="/">
+          <div id="logo">
+              <p>osé A. González &nbsp;</p>
+          </div>
+        </a>
+      </nav>
+    </header>
+
+    <h2 id="subtitulo"></h2>
+    <article>
+
+      <div id="click"></div>
+      <!-- Aquí se imprimen los datos -->
+      <div id="imprimir" class="imprimir"></div>
+      <button id="mostrarCodigo" class="imprimir izquierda"
+        onclick="muestraOcultaElemento('codigo', this, 'Ver Código', 'Ocultar')">
+        Ver código
+      </button>
+    </article>
+  
+    <div id="codigo" class="codigo" style="display: none;">
+      <script src="https://gist.github.com/JoseaScripts/3a59ee38934916286627f6afb96282c8.js"></script>
+    </div>
+
+    <div class="enlaces">
+      <a href="https://github.com/JoseaScripts/codigo/blob/master/XMLHttpRequest03.html">
+        Código publicado en <span id="github"></span>
+      </a>
+    </div>
+    <div class="enlaces">
+      Más info y detalles <a href="./XMLHttpRequest.html"><strong>aquí</strong>.</a>
+    </div>
+    <small id="modificado"></small>
+  </div>
+  <script src="../js/gist/ultimaModificacion.js"></script>
+  <script src="../js/gist/muestraOcultaElemento.js"></script>
+    <script>
+      const PROXYURL = "https://cors-anywhere.herokuapp.com/";
+      const ENLACE = "https://www.elmundo.es/servicios/noticias/scroll/comentarios/comunidad/listar.html?noticia=1705996&version=v2"
+      const ARCHIVO = PROXYURL + ENLACE;
+
+      // Selección de Objetos del DOM
+      const subtitulo = document.getElementById('subtitulo')
+      const click = document.getElementById('click')
+      const elemento = document.getElementById('imprimir')
+      click.className = 'click'
+
+      // Agregar contenido
+      subtitulo.innerHTML = 'Carga de datos asíncrona con XMLHttpRequest'
+      click.innerHTML = 'Gestión de errores, tiempo máximo de espera y medición de tiempo de descarga.'
+
+      
+      // Descarga datos al dispararse el evento 'click'
+      click.addEventListener("click", () => { xhr_t(ARCHIVO, 5000, datosCargados)});
+      
+      /** xhr_t()
+       * url => Dirección del archivo con los datos
+       * t => tiempo de espera máximo
+       * callback => función que recibe los datos con 'call'
+       * también devuelve el objeto 'performance'
+       */
+      function xhr_t(url, t, callback){ 
+          // carga argumentos extra pasados a la función
+          let xhr = new XMLHttpRequest();
+          xhr.ontimeout = function () {
+            let mensaje = "La descarga de datos de " + url + " ha sido cancelada por exceso de tiempo."
+            console.error(mensaje);
+            elemento.innerHTML = mensaje
+          };
+          xhr.onload = function() {
+            performance.mark("fin");
+            performance.measure('Descarga de datos', "inicio", "fin");
+            if (xhr.readyState === 4) {
+              if (xhr.status === 200) {
+                callback.call(xhr, performance.getEntriesByType('measure')[0]);
+              } else {
+                console.error(xhr.statusText);
+              }
+            }
+          };
+          xhr.open("GET", url, true);
+          xhr.timeout = t;
+          performance.mark("inicio");
+          xhr.send(null);
+      }
+
+      // Recibe los datos de la función xhr_t() como 'this'
+      function datosCargados(intervalo) {
+        let obj = JSON.parse(this.responseText)
+        let texto = obj.items[Math.floor(Math.random() * 10)].body
+        elemento.innerHTML = texto
+        mensaje_intervalo = `Datos recuperados:\n${intervalo.name} duró ${Math.round(intervalo.duration)} ms.`
+        console.log(mensaje_intervalo,)
+        alert(mensaje_intervalo);
+      }
+    </script>
+</body>
+</html>
