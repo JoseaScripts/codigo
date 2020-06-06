@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ejemplos de código para uso en proyectos de desarrollo">
+  <meta name="keywords" content="proyectos,desarrollo,informática,logros,currículum vitae,HTML,CSS,JavaScript,JSON,Bootstrap">
+  <meta name="author" content="José A. González">
+  <title>José A. González: descarga de datos en JSON</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+  <link rel="stylesheet" href="/css/XMLHttpRequest.css">
+  <style>
+    /* https://github.com/lonekorean/gist-syntax-themes */
+    @import url('https://cdn.rawgit.com/lonekorean/gist-syntax-themes/b737b139/stylesheets/terminal.css');
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+  </style>
+</head>
+<body onload="ultimaModificacion('modificado')">
+  <div id="container">
+
+    <header>
+      <nav>
+        <h1>Descarga de datos en JSON</h1>
+        <a href="/">
+          <div id="logo">
+              <p>osé A. González &nbsp;</p>
+          </div>
+        </a>
+      </nav>
+    </header>
+
+    <h2 id="subtitulo"></h2>
+    <article>
+
+      <div id="click"></div>
+      <!-- Aquí se imprimen los datos -->
+      <div id="imprimir" class="imprimir"></div>
+      <button id="mostrarCodigo" class="imprimir izquierda"
+        onclick="muestraOcultaElemento('codigo', this, 'Ver Código', 'Ocultar')">
+        Ver código
+      </button>
+    </article>
+  
+    <div id="codigo" class="codigo" style="display: none;">
+      <script src="https://gist.github.com/JoseaScripts/34d542b50417f7276247540a64e6f83a.js"></script>
+    </div>
+
+    <div class="enlaces">
+      <a href="https://github.com/JoseaScripts/codigo/blob/master/XMLHttpRequest03.html">
+        Código publicado en <span id="github"></span>
+      </a>
+    </div>
+    <div class="enlaces">
+      Más info y detalles <a href="./XMLHttpRequest.html"><strong>aquí</strong>.</a>
+    </div>
+    <small id="modificado"></small>
+  </div>
+  <script src="../js/gist/ultimaModificacion.js"></script>
+  <script src="../js/gist/muestraOcultaElemento.js"></script>
+    <script>
+      const PROXYURL = "https://cors-anywhere.herokuapp.com/";
+      const ENLACE = "https://www.elmundo.es/servicios/noticias/scroll/comentarios/comunidad/listar.html?noticia=1705996&version=v2"
+      const ARCHIVO = PROXYURL + ENLACE;
+
+      // Selección de Objetos del DOM
+      const subtitulo = document.getElementById('subtitulo')
+      const click = document.getElementById('click')
+      const elemento = document.getElementById('imprimir')
+
+      // Agregar contenido
+      subtitulo.innerHTML = 'Carga de datos asíncrona con XMLHttpRequest'
+      click.innerHTML = 'Los datos se cargan directamente, sin necesidad de eventos y se manipulan dentro de una función'
+
+      const XHR = new XMLHttpRequest();
+      XHR.open("GET", ARCHIVO, true);
+      XHR.onload = () => recuperaDATOS(JSON.parse(XHR.responseText))
+      XHR.send();
+
+      // Acciones que tienen que esperar hasta que se carguen los datos
+      function recuperaDATOS(X) {
+        const ELEMENTO = X.items[Math.floor(Math.random() * 10)];
+        elemento.innerHTML = ELEMENTO.body
+      }
+    </script>
+</body>
+</html>
