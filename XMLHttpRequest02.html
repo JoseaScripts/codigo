@@ -10,13 +10,13 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
   <link rel="stylesheet" href="/css/XMLHttpRequest.css">
-  <script type="text/javascript">
-    const PROXYURL = "https://cors-anywhere.herokuapp.com/";
-    const ENLACE = "https://www.elmundo.es/servicios/noticias/scroll/comentarios/comunidad/listar.html?noticia=1705996&version=v2"
-    const ARCHIVO = PROXYURL + ENLACE;
-  </script>
+  <style>
+    /* https://github.com/lonekorean/gist-syntax-themes */
+    @import url('https://cdn.rawgit.com/lonekorean/gist-syntax-themes/b737b139/stylesheets/terminal.css');
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+  </style>
 </head>
-<body onload="tareas()">
+<body onload="ultimaModificacion('modificado')">
   <div id="container">
 
     <header>
@@ -34,8 +34,17 @@
     <article>
 
       <div>Los datos abajo se han cargado de una fuente externa:</div>
+      <!-- Aquí se imprimen los datos -->
       <div id="imprimir" class="imprimir"></div>
+      <button id="mostrarCodigo" class="imprimir izquierda"
+        onclick="muestraOcultaElemento('codigo', this, 'Ver Código', 'Ocultar')">
+        Ver código
+      </button>
     </article>
+  
+    <div id="codigo" class="codigo" style="display: none;">
+      <script src="https://gist.github.com/JoseaScripts/0e9c46460be29eb6db66a362f94f0aa0.js"></script>
+    </div>
 
     <div class="enlaces">
       <a href="https://github.com/JoseaScripts/codigo/blob/master/XMLHttpRequest02.html">
@@ -43,21 +52,19 @@
       </a>
     </div>
     <div class="enlaces">
-        Más info y detalles <a href="./XMLHttpRequest.html"><strong>aquí</strong>.</a>
+      Más info y detalles <a href="./XMLHttpRequest.html"><strong>aquí</strong>.</a>
     </div>
-
-      <script>
-      function tareas() {
-        let z = document.lastModified;
-        let x = `Documento actualizado el ${z}.`;
-        let node = document.createElement("small");
-        let textnode = document.createTextNode(x);
-        node.appendChild(textnode);
-        node.setAttribute("id", "modificado");
-        document.getElementById('container').appendChild(node);
-      }
-        
+    <small id="modificado"></small>
+  </div>
+  <script src="../js/gist/ultimaModificacion.js"></script>
+  <script src="../js/gist/muestraOcultaElemento.js"></script>
+    <script>
+      const PROXYURL = "https://cors-anywhere.herokuapp.com/";
+      const ENLACE = "https://www.elmundo.es/servicios/noticias/scroll/comentarios/comunidad/listar.html?noticia=1705996&version=v2"
+      const ARCHIVO = PROXYURL + ENLACE;
+      
       let elementoDOM = document.getElementById('imprimir')
+
       try {
         const DATOS = new XMLHttpRequest();
         DATOS.open("GET", ARCHIVO, false);
@@ -69,8 +76,6 @@
         console.log('error: ', e)
         elementoDOM.innerHTML = e
       }
-
-      </script>
-  </div>
+    </script>
 </body>
 </html>
